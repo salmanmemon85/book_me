@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_12_203611) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_12_205326) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -24,8 +24,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_12_203611) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.bigint "record_id", null: false
-    t.bigint "blob_id", null: false
+    t.integer "record_id", null: false
+    t.integer "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -44,9 +44,36 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_12_203611) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.bigint "blob_id", null: false
+    t.integer "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "booking_types", force: :cascade do |t|
+    t.string "name"
+    t.string "location"
+    t.string "color", default: "#000000"
+    t.integer "duration"
+    t.text "description"
+    t.boolean "payment_requied", default: false
+    t.integer "price"
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_booking_types_on_user_id"
+  end
+
+  create_table "bookings", force: :cascade do |t|
+    t.integer "status", default: 0
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.datetime "start_at"
+    t.datetime "end_at"
+    t.boolean "customer_paid", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "booking_type_id"
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
@@ -71,10 +98,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_12_203611) do
     t.boolean "admin", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "booking_link"
+    t.index ["booking_link"], name: "index_users_on_booking_link", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "booking_types", "users"
 end

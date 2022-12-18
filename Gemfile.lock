@@ -97,6 +97,10 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    dotenv (2.8.1)
+    dotenv-rails (2.8.1)
+      dotenv (= 2.8.1)
+      railties (>= 3.2)
     erubi (1.11.0)
     ffi (1.15.5)
     friendly_id (5.5.0)
@@ -246,6 +250,7 @@ DEPENDENCIES
   cssbundling-rails
   debug
   devise (~> 4.8, >= 4.8.1)
+  dotenv-rails (~> 2.8, >= 2.8.1)
   friendly_id (~> 5.4, >= 5.4.2)
   image_processing (~> 1.2)
   jbuilder
