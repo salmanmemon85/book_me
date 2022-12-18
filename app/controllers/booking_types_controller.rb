@@ -47,7 +47,7 @@ class BookingTypesController < ApplicationController
     @booking_type.destroy
 
     respond_to do |format|
-      format.html { redirect_to booking_types_url, notice: "Booking type was successfully destroyed." }
+      format.html { redirect_to root_url, notice: "Booking type was successfully destroyed." }
       format.json { head :no_content }
     end
   end
